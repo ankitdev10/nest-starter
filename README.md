@@ -13,6 +13,7 @@ A simple starter template for building Nest.js applications with pre-configured 
 - [Linting and Formatting](#linting-and-formatting)
 - [Database Setup](#database-setup)
 - [Code Generation](#code-generation)
+- [Test](#test)
 
 ## Getting Started
 
@@ -36,6 +37,8 @@ npm install   # or yarn install
 ### Usage
 
 ## Run Development Server
+
+Update `API_HOST` and `API_PORT` variables in your `.env` as per your need. If not provided, the server will start on `http://localhost/3000` by default.
 
 ```bash
 pnpm start:dev # or yarn start:dev or npm run start:dev
@@ -69,3 +72,15 @@ Refactor codegen.json file on the root of the directory to point to your graphql
 ```bash
 pnpm codegen # or yarn codegen or npm run codegen
 ```
+
+### Test
+
+Once the application is up and running. Open your favorite browser and visit `YOUR_ENDPOINT/graphql` to get access to graphql playground. Run the following query to test the server.
+
+```graphql
+query {
+  greet(name: "YOUR_NAME")
+}
+```
+
+This query as the name suggests, welcomes you to the graphql world.
