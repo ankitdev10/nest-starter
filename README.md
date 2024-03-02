@@ -26,12 +26,12 @@ Before you begin, ensure you have the following tools installed:
 
 ### Installation
 
-Clone the repository and install the dependencies:
+Use this template(Recommended) or clone the repository
 
 ```bash
 git clone https://github.com/ankitdev10/nest-starter.git
 cd your-repo
-npm install   # or yarn install
+pnpm install # npm install or yarn install
 ```
 
 ### Usage

@@ -7,7 +7,14 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const config = app.get(ConfigService<AppConfig, true>);
     const apiOptions = config.get('apiOptions', { infer: true });
-    await app.listen(apiOptions.port, apiOptions.host);
+    await app.listen(apiOptions.port, apiOptions.host).then(() => {
+      console.log(
+        `Application is running on: http://${apiOptions.host}:${apiOptions.port}`,
+      );
+      console.log(
+        `Playground: http://${apiOptions.host}:${apiOptions.port}/graphql`,
+      );
+    });
   } catch (error) {
     console.log(error);
   }
