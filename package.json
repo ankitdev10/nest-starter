@@ -78,10 +78,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "lint-staged": {
-    "**/*": [
-      "yarn format"
-    ]
   }
 }
