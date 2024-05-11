@@ -11,12 +11,14 @@ export class TransactionInterceptor implements NestInterceptor {
     context: ExecutionContext,
     next: CallHandler<any>,
   ): Promise<Observable<any>> {
+    console.log(context.switchToHttp().getRequest());
     const req = context.switchToHttp().getRequest();
 
     const queryRunner = this.dataSource.createQueryRunner();
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
+    console.log(req);
     req[ENTITY_MANAGER_KEY] = queryRunner.manager;
 
     return next.handle().pipe(

@@ -1,22 +1,14 @@
-import { ApiType, Role, CachedSession } from '../common/types';
 import { Request, Response } from 'express';
+import { User } from '../entities/user.entity';
 
 export class RequestContext {
   private readonly _req: Request;
   private readonly _res: Response;
-  private _session?: CachedSession;
-  private readonly _apiType: ApiType;
+  private _user: User;
 
-  constructor(options: {
-    req: Request;
-    res: Response;
-    session: CachedSession | undefined;
-    apiType: ApiType;
-  }) {
+  constructor(options: { req: Request; res: Response }) {
     this._req = options.req;
     this._res = options.res;
-    this._session = options.session;
-    this._apiType = options.apiType;
   }
 
   get req(): Request {
@@ -27,20 +19,11 @@ export class RequestContext {
     return this._res;
   }
 
-  get apiType(): ApiType {
-    return this._apiType;
+  set user(user: User) {
+    this._user = user;
   }
 
-  get session(): CachedSession | undefined {
-    return this._session;
-  }
-
-  userHasRole(role: Role): boolean {
-    if (!this.session) return false;
-    return this.session.user.role === role;
-  }
-
-  setSession(session: CachedSession) {
-    this._session = session;
+  get user(): User {
+    return this._user;
   }
 }
