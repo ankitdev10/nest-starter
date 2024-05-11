@@ -1,7 +1,6 @@
 import { join } from 'path';
 import { DataSourceOptions } from 'typeorm';
-
-const entity = [];
+import entities from '../entities';
 
 export default (): AppConfig => ({
   apiOptions: {
@@ -13,7 +12,7 @@ export default (): AppConfig => ({
     synchronize: true,
     logging: false,
     url: process.env.DB_URL,
-    entities: entity,
+    entities,
     migrations: [join(__dirname, '../../migrations/*.ts')],
     // ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
   },
