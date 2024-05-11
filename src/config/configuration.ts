@@ -1,27 +1,44 @@
+import { Logger } from '@nestjs/common';
 import { join } from 'path';
-import { DataSourceOptions } from 'typeorm';
-import entities from '../entities';
+import * as z from 'zod';
 
-export default (): AppConfig => ({
-  apiOptions: {
-    host: process.env.API_HOST || 'localhost',
-    port: Number(process.env.API_PORT) || 3000,
-  },
-  database: {
-    type: (process.env.DB_TYPE as any) || 'postgres',
-    synchronize: true,
-    logging: false,
-    url: process.env.DB_URL,
-    entities,
-    migrations: [join(__dirname, '../../migrations/*.ts')],
-    // ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
-  },
+const appConfigSchema = z.object({
+  apiOptions: z.object({
+    host: z.string(),
+    port: z.number(),
+  }),
+  database: z.object({
+    type: z.string(),
+    synchronize: z.boolean(),
+    logging: z.boolean(),
+    url: z.string().optional(),
+    migrations: z.array(z.string()),
+  }),
 });
-
-export interface AppConfig {
-  database: DataSourceOptions;
-  apiOptions: {
-    host: string;
-    port: number;
+export type AppConfig = z.infer<typeof appConfigSchema>;
+export default (): AppConfig => {
+  console.log(process.env.DB_TYPE);
+  const value: AppConfig = {
+    apiOptions: {
+      host: process.env.API_HOST || 'localhost',
+      port: Number(process.env.API_PORT) || 3000,
+    },
+    database: {
+      type: (process.env.DB_TYPE as any) || 'postgres',
+      synchronize: true,
+      logging: false,
+      url: process.env.DB_URL,
+      migrations: [join(__dirname, '../../migrations/*.ts')],
+      // ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
+    },
   };
-}
+
+  const parseResult = appConfigSchema.safeParse(value);
+  if (!parseResult.success) {
+    Logger.warn('Invalid app config', 'Configuration');
+    console.error(parseResult.error.errors);
+    process.exit(1);
+  }
+
+  return parseResult.data;
+};

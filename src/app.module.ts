@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ApiModule } from './api/api.module';
 import configuration, { AppConfig } from './config/configuration';
+import entities from './entities';
 
 @Module({
   imports: [
@@ -15,7 +16,11 @@ import configuration, { AppConfig } from './config/configuration';
       imports: [ConfigModule],
       useFactory: async (config: ConfigService<AppConfig, true>) => {
         const dbconfig = config.get('database', { infer: true });
-        return dbconfig;
+        console.log({ dbconfig });
+        return {
+          ...dbconfig,
+          entities,
+        } as TypeOrmModuleOptions;
       },
       inject: [ConfigService],
     }),

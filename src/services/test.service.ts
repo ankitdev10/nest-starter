@@ -11,12 +11,9 @@ export class TestService {
   greet(args: QueryGreetArgs) {
     return `Hello ${args.name}`;
   }
-
   async createUser(ctx: RequestContext, user: MutationCreateUserArgs) {
-    const savedUser = await this.transaction
-      .getRepository(ctx, User)
-      .save(new User(user));
-
+    const userRepo = this.transaction.getRepository(ctx, User);
+    const savedUser = await userRepo.save(user);
     return savedUser.firstName + ' ' + savedUser.lastName;
   }
 }
