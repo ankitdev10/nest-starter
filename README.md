@@ -14,7 +14,7 @@ A simple starter template for building Nest.js applications with pre-configured 
 - [Database Setup](#database-setup)
 - [Code Generation](#code-generation)
 - [Test](#test)
-- [Transactional DB Calls](transactional-db-calls)
+- [Transactional DB Calls](#transactional-db-calls)
 
 ## Getting Started
 
