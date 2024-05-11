@@ -27,6 +27,16 @@ export type Scalars = {
   Float: { input: number; output: number };
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  createUser: Scalars['String']['output'];
+};
+
+export type MutationCreateUserArgs = {
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   greet: Scalars['String']['output'];
