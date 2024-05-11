@@ -17,6 +17,6 @@ export class TestService {
       .getRepository(ctx, User)
       .save(new User(user));
 
-    return savedUser;
+    return savedUser.firstName + ' ' + savedUser.lastName;
   }
 }

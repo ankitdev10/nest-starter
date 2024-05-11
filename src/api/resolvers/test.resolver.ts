@@ -12,8 +12,8 @@ export class TestResolver {
     return this.testService.greet(args);
   }
 
-  @Mutation()
   @Transaction()
+  @Mutation()
   async createUser(@Context() ctx: RequestContext, @Args() user: any) {
     return this.testService.createUser(ctx, user);
   }

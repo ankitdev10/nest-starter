@@ -22,7 +22,6 @@ const resolvers = [TestResolver];
           resolvers: [],
           context: ({ req, res }) => {
             const ctx = new RequestContext({ req, res });
-            console.log(ctx);
             return ctx;
           },
         };
