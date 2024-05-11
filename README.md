@@ -73,6 +73,31 @@ Refactor codegen.json file on the root of the directory to point to your graphql
 pnpm codegen # or yarn codegen or npm run codegen
 ```
 
+### Transactional DB Calls
+## Credit goes to [BijanRegmi](https://github.com/BijanRegmi) for coming up with this solution.
+ 
+To implement [Transaction](https://en.wikipedia.org/wiki/Database_transaction), we can use ``Transaction`` decorator as such
+
+```js
+  @Mutation()
+  @Transaction()
+  async createUser() {
+    return this.testService.createUser();
+  }
+```
+
+Further we can use ``TransactionalConnection`` service to get and manage repositories for CRUD operations.
+
+```js
+async createUser(ctx: RequestContext, user: MutationCreateUserArgs) {
+    const savedUser = await this.transaction
+      .getRepository(ctx, User)
+      .save(new User(user));
+
+    return savedUser;
+  }
+```
+
 ### Test
 
 Once the application is up and running. Open your favorite browser and visit `YOUR_ENDPOINT/graphql` to get access to graphql playground. Run the following query to test the server.
@@ -84,3 +109,5 @@ query {
 ```
 
 This query as the name suggests, welcomes you to the graphql world.
+
+## Note: Every block of code can be found in the code.
