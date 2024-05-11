@@ -17,7 +17,6 @@ const appConfigSchema = z.object({
 });
 export type AppConfig = z.infer<typeof appConfigSchema>;
 export default (): AppConfig => {
-  console.log(process.env.DB_TYPE);
   const value: AppConfig = {
     apiOptions: {
       host: process.env.API_HOST || 'localhost',

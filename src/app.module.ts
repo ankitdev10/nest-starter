@@ -16,7 +16,6 @@ import entities from './entities';
       imports: [ConfigModule],
       useFactory: async (config: ConfigService<AppConfig, true>) => {
         const dbconfig = config.get('database', { infer: true });
-        console.log({ dbconfig });
         return {
           ...dbconfig,
           entities,
